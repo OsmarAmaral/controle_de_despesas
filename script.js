@@ -36,9 +36,16 @@ const addTransactionIntoDOM = (transaction) => {
 
 const updateBalanceValues = () => {
   const transactionsAmounts = dummyTransactions.map(
-    (transaction) => transaction.amount
+    (transaction) => transaction.amout
   );
-  console.log(transactionsAmounts);
+
+  const income = transactionsAmounts.filter((value) => value > 0);
+  const total = transactionsAmounts
+    .reduce((accumulator, transaction) => accumulator + transaction, 0)
+    .toFixed(2);
+  console.log(income);
+  const despesas = transactionsAmounts.filter((value) => value < 0); // eu que fiz
+  console.log(despesas); // isso tambem
 };
 
 const init = () => {
@@ -47,3 +54,11 @@ const init = () => {
 };
 
 init();
+
+// const numbers = [1, 2, 3];
+// const sum = numbers.reduce((accumulator, number) => accumulator + number, 0);
+// sum
+
+// const randomNumbers = [36, 97, 37, 63]
+// const numbersGreaterThan = randomNumbers.filter(item => item > 37)
+// numbersGreaterThan
