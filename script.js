@@ -11,12 +11,20 @@ console.log({incomeDisplay, expenseDisplay, balanceDisplay});
 const transactionUl = document.querySelector("#transactions");
 console.log(transactionUl); //ul#trasactions.trasactions 
 
-const dummyTransactions = [
+let dummyTransactions = [
   {id: 1, name:'Bolo de Brigadeiro', amount: -20},
   {id: 2, name:'Salário', amount: 300},
   {id: 3, name:'Torta de frango', amount: -10},
-  {id: 4, name:'Violão', amount: 150}
-]
+  {id: 4, name:'Violão', amount: 150},
+];
+
+const removeTransactions = ID => { 
+  dummyTransactions.filter(transaction => transaction.id != ID);
+  console.log(dummyTransactions);
+  init();
+}
+
+
 
 const addTransactionIntoDOM = transaction => {
 
@@ -26,7 +34,7 @@ const addTransactionIntoDOM = transaction => {
   const li = document.createElement("li");
 
   li.classList.add(CSSClass);
-  li.innerHTML = `${transaction.name} <span> ${operator}  R$ ${amountWithoutOperator}</span>`;
+  li.innerHTML = `${transaction.name} <span> ${operator}  R$ ${amountWithoutOperator}</span><button class="delete-btn" onclick= "removeTransaction(${transaction.id})">x</button>`;
   transactionUl.append(li);
 
   console.log(li); // li.plus
@@ -42,6 +50,7 @@ addTransactionIntoDOM(dummyTransactions[1]); /*remover*/
 
 const upDateBalanceValues = () => {
  const transactionsAmounts = dummyTransactions.map((transaction) => transaction.amount);
+ console.log(transactionsAmounts);
 
 //const income = transactionsAmounts.filter((value) => value > 0).reduce((accumulator, value) => accumulator + value, 0).toFixed(2);
 const income = transactionsAmounts.filter((value) => value > 0).reduce((accumulator, value) => accumulator + value, 0).toFixed(2);
@@ -78,8 +87,9 @@ form.addEventListener('submit', event => {
   const transaction = {
     id: generateID(), 
     name: transName, 
-    amount: transAmount }
-  console.log(transaction); // deve retornar o valor da 'transactions'
+    amount: Number(transAmount) 
+  }
+  console.log(transaction); // deve retornar o valor da 'transaction'
 
   dummyTransactions.push(transaction);
 
