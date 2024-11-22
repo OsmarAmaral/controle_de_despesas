@@ -11,12 +11,12 @@ console.log({incomeDisplay, expenseDisplay, balanceDisplay});
 const transactionUl = document.querySelector("#transactions");
 console.log(transactionUl); //ul#trasactions.trasactions 
 
-//  let transactions = [
-//   //{id: 1, name:'Bolo de Brigadeiro', amount: -20},
-//   //{id: 2, name:'Salário', amount: 300},
-//   //{id: 3, name:'Torta de frango', amount: -10},
-//   //{id: 4, name:'Violão', amount: 150},
-//  ];
+  /* let transactions = [
+  //{id: 1, name:'Bolo de Brigadeiro', amount: -20},
+  //{id: 2, name:'Salário', amount: 300},
+   //{id: 3, name:'Torta de frango', amount: -10},
+   //{id: 4, name:'Violão', amount: 150},
+  ]; */
 
 const localStorageTransactions = JSON.parse(localStorage.getItem('transactions'));
 
