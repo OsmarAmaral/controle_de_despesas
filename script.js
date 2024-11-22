@@ -44,7 +44,7 @@ const upDateBalanceValues = () => {
  const transactionsAmounts = dummyTransactions.map((transaction) => transaction.amount);
 
 //const income = transactionsAmounts.filter((value) => value > 0).reduce((accumulator, value) => accumulator + value, 0).toFixed(2);
-const income = transactionsAmounts.filter((value) => value > 0);
+const income = transactionsAmounts.filter((value) => value > 0).reduce((accumulator, value) => accumulator + value, 0).toFixed(2);
 //const expense = transactionsAmounts.filter(value => value < 0).reduce((accumulator, value) => accumulator + value, 0).toFixed(2);
 const expense = Math.abs (transactionsAmounts.filter((value) => value < 0 ). reduce((accumulator, value) => accumulator + value, 0)).toFixed(2);
 console.log(expense); // -30.00
@@ -58,6 +58,7 @@ expenseDisplay.textContent = `R$ ${expense}`;
 }
 
 const init = () => {
+  transactionUl.innerHTML = ''; // resolve o problema da lista de itens duplicados
   dummyTransactions.forEach(addTransactionIntoDOM);
   upDateBalanceValues();
 };
