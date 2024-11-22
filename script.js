@@ -11,20 +11,23 @@ console.log({incomeDisplay, expenseDisplay, balanceDisplay});
 const transactionUl = document.querySelector("#transactions");
 console.log(transactionUl); //ul#trasactions.trasactions 
 
-let dummyTransactions = [
-  {id: 1, name:'Bolo de Brigadeiro', amount: -20},
-  {id: 2, name:'Salário', amount: 300},
-  {id: 3, name:'Torta de frango', amount: -10},
-  {id: 4, name:'Violão', amount: 150},
-];
+//  let transactions = [
+//   //{id: 1, name:'Bolo de Brigadeiro', amount: -20},
+//   //{id: 2, name:'Salário', amount: 300},
+//   //{id: 3, name:'Torta de frango', amount: -10},
+//   //{id: 4, name:'Violão', amount: 150},
+//  ];
+
+const localStorageTransactions = JSON.parse(localStorage.getItem('transactions'));
+
+let transactions = localStorage.getItem('transactions') !== null ? localStorageTransactions : [];
 
 const removeTransactions = ID => { 
-  dummyTransactions.filter(transaction => transaction.id != ID);
-  console.log(dummyTransactions);
+  transactions = transactions.filter(transaction => transaction.id != ID);
+  console.log(transactions);
+  upDateLocalStorage();
   init();
 }
-
-
 
 const addTransactionIntoDOM = transaction => {
 
@@ -34,7 +37,7 @@ const addTransactionIntoDOM = transaction => {
   const li = document.createElement("li");
 
   li.classList.add(CSSClass);
-  li.innerHTML = `${transaction.name} <span> ${operator}  R$ ${amountWithoutOperator}</span><button class="delete-btn" onclick= "removeTransaction(${transaction.id})">x</button>`;
+  li.innerHTML = `${transaction.name} <span> ${operator}  R$ ${amountWithoutOperator}</span><button class="delete-btn" onclick= "removeTransaction(${transaction.id})">x</button>`; // feito por OsmarAmaral
   transactionUl.append(li);
 
   console.log(li); // li.plus
@@ -46,10 +49,10 @@ const addTransactionIntoDOM = transaction => {
    }
 };
 
-addTransactionIntoDOM(dummyTransactions[1]); /*remover*/
+addTransactionIntoDOM(transactions[1]); /*remover*/
 
 const upDateBalanceValues = () => {
- const transactionsAmounts = dummyTransactions.map((transaction) => transaction.amount);
+ const transactionsAmounts = transactions.map((transaction) => transaction.amount);
  console.log(transactionsAmounts);
 
 //const income = transactionsAmounts.filter((value) => value > 0).reduce((accumulator, value) => accumulator + value, 0).toFixed(2);
@@ -68,11 +71,15 @@ expenseDisplay.textContent = `R$ ${expense}`;
 
 const init = () => {
   transactionUl.innerHTML = ''; // resolve o problema da lista de itens duplicados
-  dummyTransactions.forEach(addTransactionIntoDOM);
+  transactions.forEach(addTransactionIntoDOM);
   upDateBalanceValues();
 };
 
 init();
+
+const upDateLocalStorage = () => {
+  localStorage.setItem('transactions', JSON.stringify(transactions));
+}
 
 const generateID = () => Math.round(Math.random()*1000); // função que gera um id
 
@@ -91,9 +98,11 @@ form.addEventListener('submit', event => {
   }
   console.log(transaction); // deve retornar o valor da 'transaction'
 
-  dummyTransactions.push(transaction);
+  transactions.push(transaction);
 
   init();
+
+  upDateLocalStorage();
 
   inputTransactionAmount.value = ''; // limpa o input da transação
   inputTransactionName.value = ''; // limpa o input da transação
