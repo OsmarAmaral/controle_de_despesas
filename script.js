@@ -49,7 +49,7 @@ const addTransactionIntoDOM = transaction => {
    }
 };
 
-addTransactionIntoDOM(transactions[1]); /*remover*/
+// addTransactionIntoDOM(transactions[1]); /*remover*/
 
 const upDateBalanceValues = () => {
  const transactionsAmounts = transactions.map((transaction) => transaction.amount);
